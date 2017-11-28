@@ -655,10 +655,30 @@ var ReactSwipe = function (_Component) {
       this.swipe = (0, _swipeJsIso2.default)(this.container, swipeOptions);
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      var _props = this.props,
+          childCount = _props.childCount,
+          swipeOptions = _props.swipeOptions;
+
+
+      if (prevProps.childCount !== childCount) {
+        this.swipe.kill();
+        this.swipe = (0, _swipeJsIso2.default)(this.container, swipeOptions);
+      }
+    }
+  }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.swipe.kill();
       this.swipe = void 0;
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.currentSlide !== undefined) {
+        this.slide(nextProps.currentSlide);
+      }
     }
   }, {
     key: 'next',
@@ -692,11 +712,11 @@ var ReactSwipe = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props,
-          id = _props.id,
-          className = _props.className,
-          style = _props.style,
-          children = _props.children;
+      var _props2 = this.props,
+          id = _props2.id,
+          className = _props2.className,
+          style = _props2.style,
+          children = _props2.children;
 
 
       return _react2.default.createElement(
@@ -727,6 +747,7 @@ var ReactSwipe = function (_Component) {
 ReactSwipe.propTypes = {
   swipeOptions: _propTypes2.default.shape({
     startSlide: _propTypes2.default.number,
+    currentSlide: _propTypes2.default.number,
     speed: _propTypes2.default.number,
     auto: _propTypes2.default.number,
     continuous: _propTypes2.default.bool,
@@ -742,7 +763,8 @@ ReactSwipe.propTypes = {
     child: _propTypes2.default.object
   }),
   id: _propTypes2.default.string,
-  className: _propTypes2.default.string
+  className: _propTypes2.default.string,
+  childCount: _propTypes2.default.number
 };
 ReactSwipe.defaultProps = {
   swipeOptions: {},
@@ -765,7 +787,8 @@ ReactSwipe.defaultProps = {
       transitionProperty: 'transform'
     }
   },
-  className: ''
+  className: '',
+  childCount: 0
 };
 exports.default = ReactSwipe;
 module.exports = exports['default'];
