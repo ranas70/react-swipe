@@ -28,6 +28,7 @@
     "webpack": "^2.7.0"
   },
   "devDependencies": {
+    "cross-env": "^1.0.7",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
@@ -52,9 +53,9 @@
   },
   "scripts": {
     "build": "npm run build-babel && npm run build-dist-dev && npm run build-dist-prod",
-    "build-dist-dev": "NODE_ENV=development webpack --config webpack.config --colors --watch",
-    "build-dist-prod": "NODE_ENV=production webpack --config webpack.config --progress --colors -p",
-    "build-demo": "NODE_ENV=production browserify ./demo/index.js -t [ babelify --presets [ es2015 stage-0 react ] --plugins [ transform-object-assign ] ] | uglifyjs -cm > ./demo/bundle.min.js",
+    "build-dist-dev": "cross-env NODE_ENV=development webpack --config webpack.config --colors --watch",
+    "build-dist-prod": "cross-env NODE_ENV=production webpack --config webpack.config --progress --colors -p",
+    "build-demo": "cross-env NODE_ENV=production browserify ./demo/index.js -t [ babelify --presets [ es2015 stage-0 react ] --plugins [ transform-object-assign ] ] | uglifyjs -cm > ./demo/bundle.min.js",
     "build-babel": "babel ./src/reactSwipe.js --out-file index.js",
     "prepublish": "npm run build-dist-prod",
     "lint": "eslint ./src",
