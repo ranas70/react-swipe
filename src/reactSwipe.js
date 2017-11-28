@@ -7,6 +7,7 @@ class ReactSwipe extends Component {
   static propTypes = {
     swipeOptions: PropTypes.shape({
       startSlide: PropTypes.number,
+      currentSlide: PropTypes.number,
       speed: PropTypes.number,
       auto: PropTypes.number,
       continuous: PropTypes.bool,
@@ -69,6 +70,12 @@ class ReactSwipe extends Component {
   componentWillUnmount() {
     this.swipe.kill();
     this.swipe = void 0;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentSlide !== undefined){
+      this.slide(nextProps.currentSlide);
+    }
   }
 
   next() {
